@@ -1,0 +1,25 @@
+name: Dependency Cache Example
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Cache dependencies
+        id: cache-step
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: cache-63be2cd
+
+      - name: prime-cache-63be2cd
+        run: |
+          echo "Cache result: ${{ steps.cache-step.outputs.cache-hit }}"
